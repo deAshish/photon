@@ -14,4 +14,11 @@
     </string>
     <string name="enter_text">Message</string>
     <string name="splash_description">Splash Screen</string>
+
+    <string-array name="menu_items">
+        <item> Play Music </item>
+        <item> Send Message </item>
+        <item> Call </item>
+        <item> Browse Internet </item>
+    </string-array>
 </resources>

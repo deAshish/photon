@@ -11,16 +11,18 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.amitness.photon.utils.Code;
 import com.amitness.photon.utils.FlashLight;
 
 import static java.lang.Thread.sleep;
 
-public class TransmitActivity extends AppCompatActivity {
+public class TransmitActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private ProgressBar progressBar;
     private TextView textView;
     private int progressStatus = 0;
@@ -32,6 +34,16 @@ public class TransmitActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transmit);
+
+        // Code for spinner
+        Spinner mySpinner = (Spinner) findViewById(R.id.myspinner);
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(TransmitActivity.this, android.R.layout.simple_list_item_1,
+                getResources().getStringArray(R.array.menu_items));
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mySpinner.setAdapter(myAdapter);
+        mySpinner.setOnItemSelectedListener(this);
+        //Code for drop down ends, onSelect methods at buttom
+
 
         // TODO: Create an alert if flashlight is not present in device
         // TODO: Exit the app if no flashlight
@@ -93,7 +105,7 @@ public class TransmitActivity extends AppCompatActivity {
 
 
         Log.d("SendButton", "User clicked the button.");
-        EditText edit = (EditText) findViewById(R.id.user_message);
+        /*EditText edit = (EditText) findViewById(R.id.user_message);
         userMessage = edit.getText().toString().toUpperCase();
         Code code = new Code();
         bitStream = code.getBitStream(userMessage);
@@ -115,6 +127,7 @@ public class TransmitActivity extends AppCompatActivity {
                 }
             }).start();
         }
+        */
     }
 
     private void showProgress() {
@@ -160,5 +173,16 @@ public class TransmitActivity extends AppCompatActivity {
             String TAG = "Flash";
             Log.w(TAG, "InterruptedException");
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String sSelected = parent.getItemAtPosition(position).toString();
+        Toast.makeText(this,sSelected,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
